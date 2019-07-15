@@ -19,5 +19,8 @@ router.get('/', (req, res) => {
 const usersRouter = require('./src/users');
 app.use('/users', usersRouter);
 
+const handleError = require('./src/handleError');
+app.use(handleError);
+
 app.use('/api', router);
 app.listen(8000);
