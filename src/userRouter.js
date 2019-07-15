@@ -9,7 +9,7 @@ router.route('/signup')
             if (err) {
                 res.send(err);
             }
-            res.json('Bearer token');
+            res.json('User signed up');
         });
     });
 router.route('/login')
@@ -19,7 +19,8 @@ router.route('/login')
                 res.send(err);
             }
             if (user) {
-                res.json('Bearer token');
+                const bearerToken = Buffer.from(`${ user.username }:${ user.password }`).toString('base64');
+                res.json(bearerToken);
             } else {
                 res.json('User not found');
             }

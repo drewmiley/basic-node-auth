@@ -12,7 +12,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Basic Bearer Token",
+						"value": "Basic RHJldzpwYXNzd29yZA==",
 						"type": "text"
 					}
 				],
