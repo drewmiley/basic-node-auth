@@ -1,7 +1,8 @@
 const User = require('../src/User');
 
 module.exports = async (req, res, next) => {
-    if (req.path === '/user/login' || req.path === '/user/signup') {
+    const userURLs = ['/user/login', '/user/signup'];
+    if (userURLs.includes(req.path)) {
         return next();
     }
 
@@ -13,9 +14,5 @@ module.exports = async (req, res, next) => {
     const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
     const user = await User.findOne({ 'username': username, 'password': password });
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid Authentication Credentials' });
-    } else {
-        return next();
-    }
+    return user ? next() : res.status(401).json({ message: 'Invalid Authentication Credentials' });
 }
