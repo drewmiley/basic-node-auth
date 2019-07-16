@@ -21,7 +21,14 @@ describe('Authentication', () => {
         done();
     });
     it('Should pass for user urls', done => {
-        expect(false).to.be.true;
+        const req1 = { path: '/user/signup' };
+        authentication(req1, res, next).then(res => {
+            expect(res).to.equal('next');
+        });
+        const req2 = { path: '/user/login' };
+        authentication(req2, res, next).then(res => {
+            expect(res).to.equal('next');
+        });
         done();
     });
     it('Should pass for valid user authentication', done => {
