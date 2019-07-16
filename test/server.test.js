@@ -8,14 +8,6 @@ describe('Server Journeys', () => {
             done();
         });
     });
-    it('Should sign up a user', done => {
-        expect(false).to.be.true;
-        done();
-    });
-    it('Should log in an existing user', done => {
-        expect(false).to.be.true;
-        done();
-    });
     it('Should sign up a user and they can then login', done => {
         expect(false).to.be.true;
         done();
