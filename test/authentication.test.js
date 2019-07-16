@@ -3,6 +3,7 @@ const request = require('request');
 const sinon = require('sinon');
 
 const authentication = require('../src/authentication');
+const User = require('../src/User');
 
 const res = { status: status => ({ json: json => ({ status, json }) })};
 const next = () => 'next';
@@ -36,7 +37,12 @@ describe('Authentication', () => {
         done();
     });
     it('Should pass for valid user authentication', done => {
-        expect(false).to.be.true;
+        const req = { headers: { authorization: 'Basic RHJldzpwYXNzd29yZA==' } };
+        User.create({ 'username': 'Drew', 'password': 'password' }, () => {
+            authentication(req, res, next).then(res => {
+                expect(res).to.equal('next');
+            });
+        });
         done();
     });
 });
