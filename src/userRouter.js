@@ -5,12 +5,16 @@ const User = require('../src/User');
 
 router.route('/signup')
     .post((req, res) => {
-        User.create({ 'username': req.body.username, 'password': req.body.password }, err => {
-            if (err) {
-                res.send(err);
-            }
-            res.json('User signed up');
-        });
+        if (req.body.username && req.body.password) {
+            User.create({ 'username': req.body.username, 'password': req.body.password }, err => {
+                if (err) {
+                    res.send(err);
+                }
+                res.json('User signed up');
+            });
+        } else {
+            res.json('Invalid sign up body');
+        }
     });
 router.route('/login')
     .post((req, res) => {

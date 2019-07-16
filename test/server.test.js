@@ -1,5 +1,5 @@
-var expect  = require('chai').expect;
-var request = require('request');
+const expect  = require('chai').expect;
+const request = require('request');
 
 describe('Server Journeys', () => {
     it('Unauthorized API Test', done => {
@@ -13,17 +13,17 @@ describe('Server Journeys', () => {
             expect(body).to.equal('\"User signed up\"');
             request.post({ url: 'http://localhost:8000/user/login', form: { username: 'Drew', password: 'password' }}, (error, response, body) => {
                 expect(body).to.equal('\"RHJldzpwYXNzd29yZA==\"');
-            })
-        })
-        done();
+                done();
+            });
+        });
     });
     it('Should log in an existing user and then they can hit the test api', done => {
         request.post({ url: 'http://localhost:8000/user/login', form: { username: 'Drew', password: 'password' }}, (error, response, body) => {
             expect(body).to.equal('\"RHJldzpwYXNzd29yZA==\"');
             request.get({ url: 'http://localhost:8000/api', headers: { authorization: 'Basic RHJldzpwYXNzd29yZA==' }}, (error, response, body) => {
                 expect(body).to.equal('{\"message\":\"Server running\"}');
-            })
-        })
-        done();
+                done();
+            });
+        });
     });
 });

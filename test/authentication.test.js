@@ -9,40 +9,36 @@ const res = { status: status => ({ json: json => ({ status, json }) })};
 const next = () => 'next';
 
 describe('Authentication', () => {
-    it('Should return missing authorization header', done => {
+    it('Should return missing authorization header', () => {
         const req = { headers: { authorization: null } };
-        authentication(req, res, next).then(res => {
+        return authentication(req, res, next).then(res => {
             expect(res.status).to.equal(401);
-            expect(res.json).to.equal('Missing Authorization Header');
+            expect(res.json.message).to.equal('Missing Authorization Header');
         });
-        done();
     });
-    it('Should return invalid auth credentials for invalid user authentication', done => {
+    it('Should return invalid auth credentials for invalid user authentication', () => {
         const req = { headers: { authorization: 'Basic qweqewqweq' } };
-        authentication(req, res, next).then(res => {
+        return authentication(req, res, next).then(res => {
             expect(res.status).to.equal(401);
-            expect(res.json).to.equal('Invalid Authentication Credentials');
+            expect(res.json.message).to.equal('Invalid Authentication Credentials');
         });
-        done();
     });
-    it('Should pass for user urls', done => {
+    it('Should pass for user urls', () => {
         const req1 = { path: '/user/signup' };
-        authentication(req1, res, next).then(res => {
+        return authentication(req1, res, next).then(res => {
             expect(res).to.equal('next');
+            const req2 = { path: '/user/login' };
+            authentication(req2, res, next).then(res => {
+                expect(res).to.equal('next');
+            });
         });
-        const req2 = { path: '/user/login' };
-        authentication(req2, res, next).then(res => {
-            expect(res).to.equal('next');
-        });
-        done();
     });
-    it('Should pass for valid user authentication', done => {
+    it('Should pass for valid user authentication', () => {
         const req = { headers: { authorization: 'Basic RHJldzpwYXNzd29yZA==' } };
-        User.create({ 'username': 'Drew', 'password': 'password' }, () => {
+        return User.create({ 'username': 'Drew', 'password': 'password' }, () => {
             authentication(req, res, next).then(res => {
                 expect(res).to.equal('next');
             });
         });
-        done();
     });
 });
