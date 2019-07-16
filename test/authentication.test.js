@@ -17,7 +17,11 @@ describe('Authentication', () => {
         done();
     });
     it('Should return invalid auth credentials for invalid user authentication', done => {
-        expect(false).to.be.true;
+        const req = { headers: { authorization: 'Basic qweqewqweq' } };
+        authentication(req, res, next).then(res => {
+            expect(res.status).to.equal(401);
+            expect(res.json).to.equal('Invalid Authentication Credentials');
+        });
         done();
     });
     it('Should pass for user urls', done => {
