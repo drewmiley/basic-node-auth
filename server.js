@@ -12,7 +12,9 @@ const cors = require('cors');
 app.use(cors());
 
 const authentication = require('./src/authentication');
-app.use(authentication);
+app.use((req, res, next) => {
+    return authentication(req, res, next);
+});
 
 const userRouter = require('./src/userRouter');
 app.use('/user', userRouter);
