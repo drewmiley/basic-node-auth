@@ -13,7 +13,8 @@ app.use(cors());
 
 const authentication = require('./src/authentication');
 app.use((req, res, next) => {
-    return authentication(req, res, next);
+    const authResponse = authentication(req, res, next);
+    return authResponse.authenticated ? next() : res.json(authResponse.json);
 });
 
 const userRouter = require('./src/userRouter');
