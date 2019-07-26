@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/authtest');
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: String,

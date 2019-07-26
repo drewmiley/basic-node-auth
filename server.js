@@ -1,6 +1,3 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/authtest');
-
 const express = require('express');
 const app = express();
 
