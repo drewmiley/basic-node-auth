@@ -20,8 +20,6 @@
     "mocha": "^6.1.4",
     "mocha-prepare": "^0.1.0",
     "mongo-unit": "^1.4.4",
-    "request": "^2.88.0",
-    "sinon": "^7.3.2",
-    "sinon-mongoose": "^2.3.0"
+    "request": "^2.88.0"
   }
 }

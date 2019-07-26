@@ -1,6 +1,5 @@
 const expect  = require('chai').expect;
 const request = require('request');
-const sinon = require('sinon');
 const mongoUnit = require('mongo-unit');
 const testMongoUrl = process.env.MONGO_URL;
 
@@ -13,8 +12,8 @@ const next = () => 'next';
 
 describe('Authentication', () => {
 
-    beforeEach(() => mongoUnit.initDb(testMongoUrl, testData))
-    afterEach(() => mongoUnit.drop())
+    beforeEach(() => mongoUnit.initDb(testMongoUrl, testData));
+    afterEach(() => mongoUnit.drop());
 
     it('Should return missing authorization header', () => {
         const req = { headers: { authorization: null } };
