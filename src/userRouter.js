@@ -3,21 +3,19 @@ const router = express.Router();
 
 const User = require('../src/User');
 
-const signup = (req, res) => {
+const signup = async (req, res) => {
     if (req.body.username && req.body.password) {
-        User.create({ 'username': req.body.username, 'password': req.body.password }, err => {
-            return err || 'User signed up';
-        });
+        await User.create({ 'username': req.body.username, 'password': req.body.password });
+        return 'User signed up';
     } else {
         return 'Invalid sign up body';
     }
 };
 
-const login = (req, res) => {
-    User.findOne({ 'username': req.body.username, 'password': req.body.password }, (err, user) => {
-        const findUserBearerToken = user => user ? Buffer.from(`${ user.username }:${ user.password }`).toString('base64') : 'User not found';
-        return err || findUserBearerToken(user);
-    });
+const login = async (req, res) => {
+    const user = await User.findOne({ 'username': req.body.username, 'password': req.body.password });
+    const findUserBearerToken = user => user ? Buffer.from(`${ user.username }:${ user.password }`).toString('base64') : 'User not found';
+    return findUserBearerToken(user);
 };
 
 router.route('/signup')
@@ -33,4 +31,4 @@ router.route('/login')
 
 module.exports.signup = signup;
 module.exports.login = login;
-module.exports = router;
+module.exports.router = router;

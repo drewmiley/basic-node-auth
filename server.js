@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 const userRouter = require('./src/userRouter');
-app.use('/user', userRouter);
+app.use('/user', userRouter.router);
 
 const router = express.Router();
 router.get('/', (req, res) => {
